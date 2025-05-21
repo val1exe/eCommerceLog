@@ -2,8 +2,6 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 
-import java.util.List;
-import java.util.Scanner;
 
 public class PendingOrderManager {
     private Scanner scanner = new Scanner(System.in);
@@ -11,12 +9,17 @@ public class PendingOrderManager {
     public void handlePendingOrders() {
         System.out.println("\n===== PENDING ORDERS =====");
 
+
         // Load pending orders from file
         List<Order> allPendingOrders = PendingOrderFileManager.loadPendingOrders();
 
         // Filter orders for current seller
         String currentSeller = SellerSession.getSellerName();
         List<Order> sellerPendingOrders = filterOrdersBySeller(allPendingOrders, currentSeller);
+        // In PendingOrderManager.handlePendingOrders()
+        System.out.println("Current seller: " + SellerSession.getSellerName());
+        System.out.println("All pending orders: " + allPendingOrders.size());
+        System.out.println("Filtered orders: " + sellerPendingOrders.size());
 
         if (sellerPendingOrders.isEmpty()) {
             System.out.println("No pending orders found for your products.");

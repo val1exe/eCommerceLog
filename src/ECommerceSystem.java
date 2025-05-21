@@ -357,22 +357,13 @@ public class ECommerceSystem {
 
     private static void redirectToSellerDashboard(User user) {
         System.out.println("\n===== REDIRECTING TO SELLER DASHBOARD =====");
-        System.out.println("Connecting to your existing Seller Dashboard...");
-
-        // Set the current user in the SellerSession before launching dashboard
-
-        SellerSession.initializeSession("Seller Name", "Seller Location");
-
-        System.out.println("User details being passed to Seller Dashboard:");
-        System.out.println("Username: " + user.getUsername());
-        System.out.println("Full Name: " + user.getFullName());
-        System.out.println("Address: " + user.getAddress());
+        // Initialize seller session with user details
+        SellerSession.initializeSession(user.getFullName(), user.getAddress());
 
         // Start the dashboard controller
         DashboardController controller = new DashboardController();
         controller.start();
     }
-
     private static void redirectToBuyerDashboard(User user) {
         BuyerController controller = new BuyerController();
         controller.start(user);
