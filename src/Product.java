@@ -40,7 +40,7 @@ public class Product {
         this.deliveryType = "Standard Delivery";
     }
 
-    // Getters and setters remain the same
+
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 

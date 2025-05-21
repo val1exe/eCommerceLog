@@ -17,7 +17,7 @@ public class OrderFileManager {
                             .append(item.getSeller()).append(";");
                 }
 
-                // Remove last semicolon
+
                 String itemsData = itemsStr.toString();
                 if (itemsData.endsWith(";")) {
                     itemsData = itemsData.substring(0, itemsData.length() - 1);

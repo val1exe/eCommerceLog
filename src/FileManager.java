@@ -68,7 +68,7 @@ public class FileManager {
         return products;
     }
 
-    // New method to load products for a specific seller
+
     public static List<Product> loadProductsForSeller(String sellerName) {
         List<Product> allProducts = loadProducts();
         List<Product> sellerProducts = new ArrayList<>();

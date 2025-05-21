@@ -17,7 +17,7 @@ public class PendingOrderFileManager {
             }
         }
 
-        // If order doesn't exist in pending orders, add it
+
         if (!orderExists) {
             pendingOrders.add(order);
             // Write all pending orders back to file
@@ -32,13 +32,13 @@ public class PendingOrderFileManager {
                                 .append(item.getSeller()).append(";");
                     }
 
-                    // Remove last semicolon
+
                     String itemsData = itemsStr.toString();
                     if (itemsData.endsWith(";")) {
                         itemsData = itemsData.substring(0, itemsData.length() - 1);
                     }
 
-                    // Write order data to file
+
                     writer.println(pendingOrder.getOrderId() + "|" +
                             pendingOrder.getOrderDate() + "|" +
                             pendingOrder.getStatus() + "|" +
@@ -106,7 +106,7 @@ public class PendingOrderFileManager {
         return pendingOrders;
     }
 
-    // Remove a pending order from file (when status is changed)
+
     public static void removePendingOrder(String orderId) {
         List<Order> pendingOrders = loadPendingOrders();
         pendingOrders.removeIf(order -> order.getOrderId().equals(orderId));
@@ -122,13 +122,13 @@ public class PendingOrderFileManager {
                             .append(item.getSeller()).append(";");
                 }
 
-                // Remove last semicolon
+
                 String itemsData = itemsStr.toString();
                 if (itemsData.endsWith(";")) {
                     itemsData = itemsData.substring(0, itemsData.length() - 1);
                 }
 
-                // Write order data to file
+
                 writer.println(pendingOrder.getOrderId() + "|" +
                         pendingOrder.getOrderDate() + "|" +
                         pendingOrder.getStatus() + "|" +
