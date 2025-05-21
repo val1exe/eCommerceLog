@@ -24,9 +24,11 @@ public class SalesManager {
     }
 
     public SalesManager() {
-        // Initialize sales records from product file
-        List<Product> products = FileManager.loadProducts();
-        for (Product product : products) {
+        // Initialize sales records only for the current seller's products
+        String currentSeller = SellerSession.getSellerName();
+        List<Product> sellerProducts = FileManager.loadProductsForSeller(currentSeller);
+
+        for (Product product : sellerProducts) {
             initializeProductSales(product.getName());
         }
     }
@@ -56,6 +58,8 @@ public class SalesManager {
         } else {
             System.out.println("\nProduct does not exist or has no sales records.");
         }
+
+
     }
 
     public void initializeProductSales(String productName) {

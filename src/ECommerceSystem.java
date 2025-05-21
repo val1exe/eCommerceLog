@@ -360,7 +360,8 @@ public class ECommerceSystem {
         System.out.println("Connecting to your existing Seller Dashboard...");
 
         // Set the current user in the SellerSession before launching dashboard
-        SellerSession.setCurrentUser(user);
+
+        SellerSession.initializeSession("Seller Name", "Seller Location");
 
         System.out.println("User details being passed to Seller Dashboard:");
         System.out.println("Username: " + user.getUsername());
@@ -373,9 +374,10 @@ public class ECommerceSystem {
     }
 
     private static void redirectToBuyerDashboard(User user) {
+        BuyerController controller = new BuyerController();
+        controller.start(user);
         System.out.println("\n===== BUYER DASHBOARD =====");
         System.out.println("Welcome to the Buyer Dashboard, " + user.getFullName() + "!");
-        System.out.println("This is a placeholder for Buyer Dashboard implementation.");
         System.out.println("\nPress Enter to continue...");
         scanner.nextLine();
     }

@@ -1,31 +1,28 @@
 public class SellerSession {
-    private static User currentUser;
+    private static String sellerName;
+    private static String sellerLocation;
 
-    // Private constructor to prevent instantiation
-    private SellerSession() {}
-
-    // Set the current user for the session
-    public static void setCurrentUser(User user) {
-        currentUser = user;
+    // Initialize with default values or from a login
+    public static void initializeSession(String name, String location) {
+        sellerName = name;
+        sellerLocation = location;
     }
 
-    // Get the current user
-    public static User getCurrentUser() {
-        return currentUser;
-    }
-
-    // Get the seller's name
     public static String getSellerName() {
-        return currentUser != null ? currentUser.getFullName() : "Unknown Seller";
+        // Return a default if not set
+        return (sellerName != null) ? sellerName : "Default Seller";
     }
 
-    // Get the seller's location/address
     public static String getSellerLocation() {
-        return currentUser != null ? currentUser.getAddress() : "Unknown Location";
+        // Return a default if not set
+        return (sellerLocation != null) ? sellerLocation : "Default Location";
     }
 
-    // Clear the session when logging out
-    public static void clearSession() {
-        currentUser = null;
+    public static void setSellerName(String name) {
+        sellerName = name;
+    }
+
+    public static void setSellerLocation(String location) {
+        sellerLocation = location;
     }
 }

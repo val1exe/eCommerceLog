@@ -1,2 +1,2 @@
-Oreo|60.0|1000|2025-05-26|Jann Eroll T. Leycano|226 Lote St. San Juan Darangan Binangonan Rizal.|100 grams|Food|false|Standard Delivery
-Century Burat|80.0|500|2025-05-26|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|100 grams|Canned Food|false|Standard Delivery
+Century Burat|80.0|150|2025-05-26|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|100 grams|Canned Food|false|Standard Delivery
+BURAT|100.0|1000|2025-05-27|Seller Name|Seller Location|Toy|1kg|false|Bulk Delivery

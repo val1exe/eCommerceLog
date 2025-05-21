@@ -18,7 +18,7 @@ public class ProductManager {
             if (shouldReturn) {
                 return true; // Return to main dashboard
             }
-            // Otherwise continue in manage products menu
+
         }
     }
 

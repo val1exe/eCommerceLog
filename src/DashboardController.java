@@ -6,7 +6,7 @@ public class DashboardController {
     private StockManager stockManager = new StockManager();
     private SalesManager salesManager = new SalesManager();
     private ShippingManager shippingManager = new ShippingManager();
-
+    private PendingOrderManager pendingOrderManager = new PendingOrderManager();
     public void start() {
         dashboard();
     }
@@ -23,7 +23,8 @@ public class DashboardController {
         System.out.println("3. Display all sales");
         System.out.println("4. Manage Products");
         System.out.println("5. Product Shipping");
-        System.out.println("6. Logout / Exit");
+        System.out.println("6. Pending Orders");
+        System.out.println("7. Logout / Exit");
         System.out.print("Enter your choice: ");
 
         int choice = scanner.nextInt();
@@ -53,6 +54,10 @@ public class DashboardController {
                 returnToHome();
                 break;
             case 6:
+                pendingOrderManager.handlePendingOrders(); // Add this case
+                returnToHome();
+                break;
+            case 7: // Change from 6 to 7
                 handleLogout();
                 break;
             default:
