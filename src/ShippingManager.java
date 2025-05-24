@@ -1,44 +1,84 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ShippingManager {
-    private List<Shipment> shipments = new ArrayList<>();
+    private Scanner scanner = new Scanner(System.in);
 
-    public void handleProductShipping(ProductManager productManager) {
+    public void handleProductShipping() {
         System.out.println("\n===== PRODUCT SHIPPING =====");
 
-        if (shipments.isEmpty()) {
-            System.out.println("No products are currently being shipped. You need to add products first.");
+        // Load all orders for current seller
+        List<Order> sellerOrders = OrderFileManager.loadOrdersForSeller(SellerSession.getSellerName());
+
+        // Filter orders that can be shipped/delivered
+        List<Order> processableOrders = new ArrayList<>();
+        for (Order order : sellerOrders) {
+            if (order.getStatus().equals("Pending") || order.getStatus().equals("Shipped")) {
+                processableOrders.add(order);
+            }
+        }
+
+        if (processableOrders.isEmpty()) {
+            System.out.println("No orders available for shipping/delivery.");
             return;
         }
 
-        System.out.println("Products currently being shipped & delivered:");
-        System.out.println("Product\tQuantity\tShip Date\tStatus");
-        System.out.println("------------------------------------------");
-
-        for (Shipment shipment : shipments) {
-            System.out.println(shipment.getProductName() + "\t" + shipment.getQuantity() + "\t\t"
-                    + shipment.getShipDate() + "\t" + shipment.getStatus());
+        // Display orders
+        System.out.println("No.\tOrder ID\tStatus\t\tProducts");
+        for (int i = 0; i < processableOrders.size(); i++) {
+            Order order = processableOrders.get(i);
+            System.out.print((i+1) + ".\t" + order.getOrderId() + "\t" + order.getStatus() + "\t\t");
+            for (OrderItem item : order.getItems()) {
+                if (item.getSeller().equals(SellerSession.getSellerName())) {
+                    System.out.print(item.getProductName() + " (" + item.getQuantity() + "), ");
+                }
+            }
+            System.out.println();
         }
 
-        System.out.print("\nGo back? (Y/N): ");
-        String choice = System.console().readLine().toUpperCase();
+        // Get user input
+        System.out.print("\nEnter order number to update status (0 to cancel): ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
 
-        if (!choice.equals("Y")) {
-            System.out.println("\n===== SHIPMENT DETAILS =====");
+        if (choice > 0 && choice <= processableOrders.size()) {
+            updateOrderStatus(processableOrders.get(choice - 1));
+        }
+    }
 
-            if (productManager.getProducts().isEmpty()) {
-                System.out.println("No product details available. You need to add products first.");
+    public void updateOrderStatus(Order order) {
+        System.out.println("\n===== UPDATE STATUS =====");
+        System.out.println("Current status: " + order.getStatus());
+        System.out.println("1. Mark as Shipped");
+        System.out.println("2. Mark as Delivered");
+        System.out.println("3. Cancel Order");
+        System.out.print("Select action: ");
+
+        int action = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (action) {
+            case 1:
+                order.setStatus("Shipped");
+                break;
+            case 2:
+                order.setStatus("Delivered");
+                break;
+            case 3:
+                order.setStatus("Cancelled");
+                break;
+            default:
+                System.out.println("Invalid choice.");
                 return;
-            }
-
-            for (Product product : productManager.getProducts()) {
-                System.out.println("\nProduct: " + product.getName());
-                System.out.println("- Price: $" + product.getPrice());
-                System.out.println("- Quantity: " + product.getQuantity());
-                System.out.println("- Estimated date of arrival: " + product.getArrivalDate());
-                System.out.println("- Name of seller & place: " + product.getSeller() + ", " + product.getLocation());
-            }
         }
+
+        // Update order in the main orders file
+        List<Order> allOrders = OrderFileManager.loadOrders();
+        allOrders.removeIf(o -> o.getOrderId().equals(order.getOrderId()));
+        allOrders.add(order);
+        OrderFileManager.saveOrders(allOrders);
+
+        System.out.println("Order status updated to: " + order.getStatus());
     }
 }

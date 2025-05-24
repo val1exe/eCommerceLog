@@ -1,3 +1,2 @@
-ORD1747744549948|2025-05-20|Pending|Eroll Pogi|669 Ole St. Saint Duke Binangoongan|Cash on Delivery|42000.0|Oreo,700,60.0,Jann Eroll T. Leycano
-ORD1747827138544|2025-05-21|Pending|Eroll Pogi|669 Ole St. Saint Duke Binangoongan|Cash on Delivery|20000.0|Century Burat,250,80.0,Jin Bilog
-ORD1747831455328|2025-05-21|Pending|Eroll Pogi|669 Ole St. Saint Duke Binangoongan|Cash on Delivery|8000.0|Century Burat,100,80.0,Jin Bilog
+ORD1748056572438|2025-05-24|Delivered|Eroll Pogi|669 Ole St. Saint Duke Binangoongan|Cash on Delivery|1200.0|Century Tuna,15,80.0,Jin Bilog
+ORD1748058598962|2025-05-24|Delivered|Eroll Pogi|669 Ole St. Saint Duke Binangoongan|Cash on Delivery|2000.0|Century Tuna,25,80.0,Jin Bilog

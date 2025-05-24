@@ -1,29 +1,43 @@
 import java.io.*;
 import java.util.*;
 
-public class OrderFileManager {
+public class  OrderFileManager {
     private static final String ORDERS_FILE = "orders.txt";
 
     // Save all orders to file
     public static void saveOrders(List<Order> orders) {
+        // Create a new list to avoid modifying the input list
+        List<Order> uniqueOrders = new ArrayList<>();
+
+        // Remove duplicates by order ID
+        for (Order order : orders) {
+            boolean exists = false;
+            for (Order uniqueOrder : uniqueOrders) {
+                if (uniqueOrder.getOrderId().equals(order.getOrderId())) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                uniqueOrders.add(order);
+            }
+        }
+
         try (PrintWriter writer = new PrintWriter(new FileWriter(ORDERS_FILE))) {
-            for (Order order : orders) {
+            for (Order order : uniqueOrders) {
                 StringBuilder itemsStr = new StringBuilder();
                 for (OrderItem item : order.getItems()) {
-                    // Format: productName,quantity,unitPrice,seller;
                     itemsStr.append(item.getProductName()).append(",")
                             .append(item.getQuantity()).append(",")
                             .append(item.getUnitPrice()).append(",")
                             .append(item.getSeller()).append(";");
                 }
 
-
                 String itemsData = itemsStr.toString();
                 if (itemsData.endsWith(";")) {
                     itemsData = itemsData.substring(0, itemsData.length() - 1);
                 }
 
-                // Write order data to file
                 writer.println(order.getOrderId() + "|" +
                         order.getOrderDate() + "|" +
                         order.getStatus() + "|" +
@@ -37,6 +51,21 @@ public class OrderFileManager {
         } catch (IOException e) {
             System.out.println("Error saving orders: " + e.getMessage());
         }
+    }
+
+    public static List<Order> loadOrdersForSeller(String sellerName) {
+        List<Order> sellerOrders = new ArrayList<>();
+        List<Order> allOrders = loadOrders();
+
+        for (Order order : allOrders) {
+            for (OrderItem item : order.getItems()) {
+                if (item.getSeller().equals(sellerName)) {
+                    sellerOrders.add(order);
+                    break;  // Add order once even if it has multiple items from seller
+                }
+            }
+        }
+        return sellerOrders;
     }
 
     // Load all orders from file

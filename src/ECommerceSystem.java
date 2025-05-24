@@ -57,11 +57,25 @@ class User {
         this.role = role;
     }
 
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return username + "," + password + "," + email + "," + fullName + "," + address + "," + (role != null ? role.name() : "");
     }
 }
+
 
 /**
  * Handles file operations for user data.
@@ -178,6 +192,86 @@ class UserRepository {
             }
         } catch (IOException e) {
             System.out.println("Error updating user role: " + e.getMessage());
+        }
+    }
+
+    public void updateUser(User updatedUser) {
+        List<String> fileContent = new ArrayList<>();
+
+        try (FileReader fr = new FileReader(USERS_FILE);
+             BufferedReader br = new BufferedReader(fr)) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 5 && parts[0].equals(updatedUser.getUsername())) {
+                    fileContent.add(updatedUser.toString());
+                } else {
+                    fileContent.add(line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading user file: " + e.getMessage());
+            return;
+        }
+
+        try (FileWriter fw = new FileWriter(USERS_FILE);
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter out = new PrintWriter(bw)) {
+            for (String line : fileContent) {
+                out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error updating user file: " + e.getMessage());
+        }
+
+        // Also update the role-specific file
+        updateRoleFile(updatedUser);
+    }
+
+    private void updateRoleFile(User updatedUser) {
+        String roleFile;
+        switch (updatedUser.getRole()) {
+            case BUYER:
+                roleFile = BUYERS_FILE;
+                break;
+            case SELLER:
+                roleFile = SELLERS_FILE;
+                break;
+            case LOGISTICS:
+                roleFile = LOGISTICS_FILE;
+                break;
+            case ADMIN:
+                roleFile = ADMINS_FILE;
+                break;
+            default:
+                return;
+        }
+
+        List<String> fileContent = new ArrayList<>();
+        try (FileReader fr = new FileReader(roleFile);
+             BufferedReader br = new BufferedReader(fr)) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 5 && parts[0].equals(updatedUser.getUsername())) {
+                    fileContent.add(updatedUser.toString());
+                } else {
+                    fileContent.add(line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading role file: " + e.getMessage());
+            return;
+        }
+
+        try (FileWriter fw = new FileWriter(roleFile);
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter out = new PrintWriter(bw)) {
+            for (String line : fileContent) {
+                out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error updating role file: " + e.getMessage());
         }
     }
 }
@@ -357,12 +451,24 @@ public class ECommerceSystem {
 
     private static void redirectToSellerDashboard(User user) {
         System.out.println("\n===== REDIRECTING TO SELLER DASHBOARD =====");
-        // Initialize seller session with user details
-        SellerSession.initializeSession(user.getFullName(), user.getAddress());
+        System.out.println("Connecting to your existing Seller Dashboard...");
 
-        // Start the dashboard controller
-        DashboardController controller = new DashboardController();
-        controller.start();
+        // Set the current user in the SellerSession before launching dashboard
+        SellerSession.setCurrentUser(user);
+
+        System.out.println("User details being passed to Seller Dashboard:");
+        System.out.println("Username: " + user.getUsername());
+        System.out.println("Full Name: " + user.getFullName());
+        System.out.println("Address: " + user.getAddress());
+
+        // Start the dashboard controller with try-catch for logout
+        try {
+            DashboardController controller = new DashboardController();
+            controller.start();
+        } catch (LogoutException e) {
+            // User logged out, return to main menu
+            main(new String[]{});
+        }
     }
     private static void redirectToBuyerDashboard(User user) {
         BuyerController controller = new BuyerController();

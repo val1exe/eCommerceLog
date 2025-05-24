@@ -1,6 +1,7 @@
 public class SellerSession {
     private static String sellerName;
     private static String sellerLocation;
+    private static User currentUser;  // Added this line
 
     // Initialize with default values or from a login
     public static void initializeSession(String name, String location) {
@@ -24,5 +25,17 @@ public class SellerSession {
 
     public static void setSellerLocation(String location) {
         sellerLocation = location;
+    }
+
+
+    public static void setCurrentUser(User user) {
+        currentUser = user;
+        sellerName = user.getFullName();
+        sellerLocation = user.getAddress();
+    }
+
+    // Get the current user
+    public static User getCurrentUser() {
+        return currentUser;
     }
 }

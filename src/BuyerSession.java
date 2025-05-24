@@ -5,6 +5,7 @@ public class BuyerSession {
     private static String buyerName;
     private static String buyerLocation;
     private static List<Order> orders = new ArrayList<>();
+    private static User currentUser;  // Added currentUser field
 
     // Initialize with default values or from a login
     public static void initializeSession(String name, String location) {
@@ -36,5 +37,16 @@ public class BuyerSession {
 
     public static List<Order> getOrders() {
         return orders;
+    }
+
+    // Set the current user and update session details
+    public static void setCurrentUser(User user) {
+        currentUser = user;
+        buyerName = user.getFullName();
+        buyerLocation = user.getAddress();
+    }
+    // Get the current user
+    public static User getCurrentUser() {
+        return currentUser;
     }
 }

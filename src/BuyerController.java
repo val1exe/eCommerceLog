@@ -1,4 +1,3 @@
-// BuyerController.java
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
@@ -18,9 +17,15 @@ public class BuyerController {
 
     public void start(User user) {
         System.out.println("\n===== WELCOME TO THE BUYER SYSTEM =====");
+
+        // Set buyer info from logged in user
+        buyerSession.setCurrentUser(user); // Add this line
         buyerSession.setBuyerName(user.getFullName());
         buyerSession.setBuyerLocation(user.getAddress());
+
         System.out.println("Welcome, " + buyerSession.getBuyerName() + "!");
+
+        // Go to the main menu
         mainMenu();
     }
 
@@ -352,6 +357,7 @@ public class BuyerController {
 
     private void editProfile() {
         System.out.println("\n===== EDIT PROFILE =====");
+
         System.out.print("Enter new name (leave blank to keep current): ");
         String name = scanner.nextLine();
 
@@ -366,7 +372,41 @@ public class BuyerController {
             buyerSession.setBuyerLocation(location);
         }
 
-        System.out.println("Profile updated successfully!");
+        System.out.print("Do you want to change password? (Y/N): ");
+        String changePassword = scanner.nextLine().toUpperCase();
+        if (changePassword.equals("Y")) {
+            changePassword();
+        }
+
+
+    }
+
+    private void changePassword() {
+        User currentUser = buyerSession.getCurrentUser();
+        UserRepository userRepository = new UserRepository();
+
+        System.out.print("Enter current password: ");
+        String currentPassword = scanner.nextLine();
+
+        if (!currentPassword.equals(currentUser.getPassword())) {
+            System.out.println("Current password is incorrect!");
+            return;
+        }
+
+        System.out.print("Enter new password: ");
+        String newPassword = scanner.nextLine();
+
+        System.out.print("Confirm new password: ");
+        String confirmPassword = scanner.nextLine();
+
+        if (!newPassword.equals(confirmPassword)) {
+            System.out.println("Passwords do not match!");
+            return;
+        }
+
+        currentUser.setPassword(newPassword);
+        userRepository.updateUser(currentUser);
+        System.out.println("Password changed successfully!");
     }
 
     private void viewOrderHistory() {
