@@ -1,2 +1,3 @@
 Century Tuna|80.0|50|2025-05-26|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|100 grams|Canned Food|false|Standard Delivery
-Oreo|100.0|1000|2025-05-27|Seller Name|Seller Location|Toy|1kg|false|Bulk Delivery
+Nachos|115.0|200|2025-05-31|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|150 grams|Chips|false|Bulk Delivery
+Stick-o|70.0|250|2025-05-31|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|500 grams|Biscuit|false|Bulk Delivery

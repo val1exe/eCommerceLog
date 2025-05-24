@@ -8,21 +8,21 @@ public class ProductManager {
 
     public ProductManager() {
         // Load products from file when initializing
-        products = FileManager.loadProducts();
+        products = FileManager.loadProductsForSeller(SellerSession.getSellerName());
     }
 
-    public boolean handleManageProducts(StockManager stockManager, SalesManager salesManager, DashboardController dashboardController) {
+    public boolean handleManageProducts(StockManager stockManager, DashboardController dashboardController) {
         System.out.println("\n===== MANAGE PRODUCTS =====");
         while (true) {
-            boolean shouldReturn = displayManageProductOptions(stockManager, salesManager, dashboardController);
+            boolean shouldReturn = displayManageProductOptions(stockManager, dashboardController);
             if (shouldReturn) {
                 return true; // Return to main dashboard
             }
-
+            // Otherwise continue in manage products menu
         }
     }
 
-    private boolean displayManageProductOptions(StockManager stockManager, SalesManager salesManager, DashboardController dashboardController) {
+    private boolean displayManageProductOptions(StockManager stockManager, DashboardController dashboardController) {
         System.out.println("\n===== MANAGE PRODUCTS MENU =====");
         System.out.println("1. Add product");
         System.out.println("2. Edit product");
@@ -36,13 +36,13 @@ public class ProductManager {
 
         switch (choice) {
             case 1:
-                handleAddProduct(stockManager, salesManager);
+                handleAddProduct(stockManager);
                 return false;
             case 2:
                 handleEditProduct(stockManager);
                 return false;
             case 3:
-                handleDeleteProduct(stockManager, salesManager);
+                handleDeleteProduct(stockManager);
                 return false;
             case 4:
                 handleProductInformation();
@@ -55,7 +55,7 @@ public class ProductManager {
         }
     }
 
-    public void handleAddProduct(StockManager stockManager, SalesManager salesManager) {
+    public void handleAddProduct(StockManager stockManager) {
         boolean addingProducts = true;
 
         while (addingProducts) {
@@ -133,7 +133,6 @@ public class ProductManager {
             String sellerName = SellerSession.getSellerName();
             String sellerLocation = SellerSession.getSellerLocation();
 
-            // Display confirmation of seller details being added
             System.out.println("\nAdding product with seller information:");
             System.out.println("Seller: " + sellerName);
             System.out.println("Location: " + sellerLocation);
@@ -149,14 +148,12 @@ public class ProductManager {
             addProduct(newProduct);
             stockManager.addStock(new Stock(name.substring(0, Math.min(4, name.length())).toUpperCase(),
                     name, price, quantity));
-            salesManager.initializeProductSales(name);
 
             // Save products to file after adding
             FileManager.saveProducts(products);
 
             System.out.println("Product added successfully!");
 
-            // Ask if the user wants to add another product
             System.out.print("\nDo you want to add another product? (Y/N): ");
             String addAnother = scanner.nextLine().toUpperCase();
 
@@ -258,7 +255,7 @@ public class ProductManager {
         }
     }
 
-    public void handleDeleteProduct(StockManager stockManager, SalesManager salesManager) {
+    public void handleDeleteProduct(StockManager stockManager) {
         boolean deleting = true;
 
         while (deleting) {
@@ -288,7 +285,6 @@ public class ProductManager {
                 if (confirm.equals("Y")) {
                     Product deletedProduct = removeProduct(productIndex - 1);
                     stockManager.removeStock(deletedProduct.getName());
-                    salesManager.removeProductSales(deletedProduct.getName());
 
                     // Save products to file after deletion
                     FileManager.saveProducts(products);
@@ -405,7 +401,7 @@ public class ProductManager {
 
         for (int i = 0; i < products.size(); i++) {
             Product product = products.get(i);
-            System.out.println((i + 1) + ". " + product.getName() + " - $" + product.getPrice() + " (Qty: " + product.getQuantity() + ")");
+            System.out.println((i + 1) + ". " + product.getName() + " - ₱" + product.getPrice() + " (Qty: " + product.getQuantity() + ")");
         }
     }
 

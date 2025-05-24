@@ -42,11 +42,11 @@ public class DashboardController {
                 returnToHome();
                 break;
             case 3:
-                salesManager.handleDisplayAllSales(productManager);
+                salesManager.handleDisplayAllSales();
                 returnToHome();
                 break;
             case 4:
-                boolean shouldReturn = productManager.handleManageProducts(stockManager, salesManager, this);
+                boolean shouldReturn = productManager.handleManageProducts(stockManager, this);
                 if (shouldReturn) {
                     dashboard();
                 }
