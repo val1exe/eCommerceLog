@@ -1,6 +1,6 @@
-Century Tuna|80.0|50|2025-05-26|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|100 grams|Canned Food|false
-Nachos|115.0|200|2025-05-31|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|150 grams|Chips|false
-Stick-o|70.0|250|2025-05-31|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|500 grams|Biscuit|false
-Yakult|70.0|100|2025-05-31|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|100 ml|Drink|false
-Lettuce|60.0|40|2025-05-31|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|100 grams|Vegetable|true
+Century Tuna|80.0|5|2025-05-26|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|100 grams|Canned Food|false
+Nachos|115.0|54|2025-05-31|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|150 grams|Chips|false
+Stick-o|70.0|100|2025-05-31|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|500 grams|Biscuit|false
+Yakult|70.0|8|2025-05-31|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|100 ml|Drink|false
+Lettuce|60.0|5|2025-05-31|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|100 grams|Vegetable|true
 s|2.0|2|2025-05-31|Jin Bilog|788 Fanum St. Macamot Cainta Rizal|e|e|true

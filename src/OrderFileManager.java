@@ -77,7 +77,6 @@ public class  OrderFileManager {
         File file = new File(ORDERS_FILE);
 
         if (!file.exists()) {
-            System.out.println("No orders file found. Starting with empty orders list.");
             return orders;
         }
 
@@ -97,7 +96,7 @@ public class  OrderFileManager {
                     // Parse order items
                     List<OrderItem> items = new ArrayList<>();
                     if (parts.length > 7) {
-                        String[] itemsArray = parts[7].split(",");
+                        String[] itemsArray = parts[7].split(";");
                         for (String itemStr : itemsArray) {
                             String[] itemParts = itemStr.split(",");
                             if (itemParts.length >= 6) {
@@ -123,5 +122,4 @@ public class  OrderFileManager {
         }
 
         return orders;
-    }
-}
+    }}

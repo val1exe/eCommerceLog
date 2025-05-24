@@ -169,12 +169,7 @@ public class BuyerController {
         cart.addItem(product, quantity);
         System.out.println("\nAdded " + quantity + " " + product.getName() + " to your cart!");
 
-        System.out.print("\nWould you like to view your cart? (Y/N): ");
-        String viewCart = scanner.nextLine().toUpperCase();
 
-        if (viewCart.equals("Y")) {
-            viewCart();
-        }
     }
 
     private void viewCart() {
@@ -381,8 +376,6 @@ public class BuyerController {
         existingOrders.add(order);
         OrderFileManager.saveOrders(existingOrders);
 
-        // Save the order to pending_orders.txt for sellers to see
-        PendingOrderFileManager.savePendingOrder(order);
 
         // Clear the cart
         cart.clear();

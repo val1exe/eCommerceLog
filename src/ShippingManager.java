@@ -25,7 +25,7 @@ public class ShippingManager {
         }
 
         // Display orders
-        System.out.println("No.\tOrder ID\tStatus\t\tProducts");
+        System.out.println("No.\tOrder ID\t\t\tStatus\t\tProducts");
         for (int i = 0; i < processableOrders.size(); i++) {
             Order order = processableOrders.get(i);
             System.out.print((i+1) + ".\t" + order.getOrderId() + "\t" + order.getStatus() + "\t\t");

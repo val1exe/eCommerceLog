@@ -1,2 +1,3 @@
-ORD1748079735329|2025-05-24|Delivered|Eroll Pogi|669 Ole St. Saint Duke Binangoongan|Cash on Delivery|2100.0|Yakult,30,70.0,Jin Bilog,Standard Delivery,false
-ORD1748080093137|2025-05-24|Shipped|Eroll Pogi|669 Ole St. Saint Duke Binangoongan|Cash on Delivery|2400.0|Lettuce,40,60.0,Jin Bilog,Standard Delivery,true
+ORD1748098263878|2025-05-24|Delivered|Eroll Pogi|669 Ole St. Saint Duke Binangoongan|Cash on Delivery|720.0|Century Tuna,9,80.0,Jin Bilog,Standard Delivery,false
+ORD1748099204807|2025-05-24|Delivered|Eroll Pogi|669 Ole St. Saint Duke Binangoongan|Cash on Delivery|8001.0|Century Tuna,10,72.0,Jin Bilog,Bulk Delivery,false;Yakult,40,63.0,Jin Bilog,Bulk Delivery,false;Nachos,46,103.5,Jin Bilog,Bulk Delivery,false
+ORD1748098994909|2025-05-24|Delivered|Eroll Pogi|669 Ole St. Saint Duke Binangoongan|Cash on Delivery|3500.0|Stick-o,50,70.0,Jin Bilog,Standard Delivery,false
