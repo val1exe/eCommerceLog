@@ -27,10 +27,13 @@ public class  OrderFileManager {
             for (Order order : uniqueOrders) {
                 StringBuilder itemsStr = new StringBuilder();
                 for (OrderItem item : order.getItems()) {
+                    // In both classes, modify the save methods to include deliveryType and isPerishable:
                     itemsStr.append(item.getProductName()).append(",")
                             .append(item.getQuantity()).append(",")
                             .append(item.getUnitPrice()).append(",")
-                            .append(item.getSeller()).append(";");
+                            .append(item.getSeller()).append(",")
+                            .append(item.getDeliveryType()).append(",")
+                            .append(item.isPerishable()).append(";");
                 }
 
                 String itemsData = itemsStr.toString();
@@ -94,16 +97,19 @@ public class  OrderFileManager {
                     // Parse order items
                     List<OrderItem> items = new ArrayList<>();
                     if (parts.length > 7) {
-                        String[] itemsArray = parts[7].split(";");
+                        String[] itemsArray = parts[7].split(",");
                         for (String itemStr : itemsArray) {
                             String[] itemParts = itemStr.split(",");
-                            if (itemParts.length >= 4) {
+                            if (itemParts.length >= 6) {
                                 String productName = itemParts[0];
                                 int quantity = Integer.parseInt(itemParts[1]);
                                 double unitPrice = Double.parseDouble(itemParts[2]);
                                 String seller = itemParts[3];
+                                String deliveryType = itemParts[4];
+                                boolean isPerishable = Boolean.parseBoolean(itemParts[5]);
 
-                                items.add(new OrderItem(productName, quantity, unitPrice, seller));
+                                items.add(new OrderItem(productName, quantity, unitPrice, seller,
+                                        deliveryType, isPerishable));
                             }
                         }
                     }

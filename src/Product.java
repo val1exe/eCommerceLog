@@ -8,7 +8,7 @@ public class Product {
     private String description;
     private String category;
     private boolean isPerishable;
-    private String deliveryType;
+
 
     public Product(String name, double price, int quantity, String arrivalDate) {
         this.name = name;
@@ -23,7 +23,7 @@ public class Product {
         this.description = "";
         this.category = "";
         this.isPerishable = false;
-        this.deliveryType = "Standard Delivery";
+
     }
 
     // Overloaded constructor for backward compatibility
@@ -37,7 +37,7 @@ public class Product {
         this.description = "";
         this.category = "";
         this.isPerishable = false;
-        this.deliveryType = "Standard Delivery";
+
     }
 
 
@@ -68,6 +68,4 @@ public class Product {
     public boolean isPerishable() { return isPerishable; }
     public void setPerishable(boolean perishable) { isPerishable = perishable; }
 
-    public String getDeliveryType() { return deliveryType; }
-    public void setDeliveryType(String deliveryType) { this.deliveryType = deliveryType; }
 }

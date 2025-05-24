@@ -16,8 +16,7 @@ public class FileManager {
                         product.getLocation() + "|" +
                         product.getDescription() + "|" +
                         product.getCategory() + "|" +
-                        product.isPerishable() + "|" +
-                        product.getDeliveryType());
+                        product.isPerishable());
             }
             System.out.println("Products saved to file successfully.");
         } catch (IOException e) {
@@ -39,7 +38,7 @@ public class FileManager {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
-                if (parts.length >= 10) {
+                if (parts.length >= 9) {
                     String name = parts[0];
                     double price = Double.parseDouble(parts[1]);
                     int quantity = Integer.parseInt(parts[2]);
@@ -49,13 +48,13 @@ public class FileManager {
                     String description = parts[6];
                     String category = parts[7];
                     boolean isPerishable = Boolean.parseBoolean(parts[8]);
-                    String deliveryType = parts[9];
+
 
                     Product product = new Product(name, price, quantity, arrivalDate, seller, location);
                     product.setDescription(description);
                     product.setCategory(category);
                     product.setPerishable(isPerishable);
-                    product.setDeliveryType(deliveryType);
+
 
                     products.add(product);
                 }

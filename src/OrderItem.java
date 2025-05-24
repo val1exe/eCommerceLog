@@ -3,13 +3,19 @@ public class OrderItem {
     private int quantity;
     private double unitPrice;
     private String seller;
+    private String deliveryType;
+    private boolean isPerishable;
 
-    public OrderItem(String productName, int quantity, double unitPrice, String seller) {
+    public OrderItem(String productName, int quantity, double unitPrice, String seller,
+                     String deliveryType, boolean isPerishable) {
         this.productName = productName;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.seller = seller;
+        this.deliveryType = deliveryType;
+        this.isPerishable = isPerishable;
     }
+
 
     // Getters and setters
     public String getProductName() { return productName; }
@@ -23,6 +29,9 @@ public class OrderItem {
 
     public String getSeller() { return seller; }
     public void setSeller(String seller) { this.seller = seller; }
+
+    public String getDeliveryType() { return deliveryType; }
+    public boolean isPerishable() { return isPerishable; }
 
     // Calculate total price for this item
     public double getTotalPrice() {

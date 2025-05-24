@@ -108,26 +108,6 @@ public class ProductManager {
             }
             boolean isPerishable = perishableInput.equals("Y");
 
-            System.out.println("\nSelect delivery type:");
-            System.out.println("0 - Exit without adding");
-            System.out.println("1 - Express Delivery");
-            System.out.println("2 - Standard Delivery");
-            System.out.println("3 - Bulk Delivery");
-            System.out.print("Enter choice (0-3): ");
-            String deliveryInput = scanner.nextLine();
-            if (deliveryInput.equals("0")) {
-                System.out.println("Add product cancelled.");
-                break;
-            }
-            int deliveryType = Integer.parseInt(deliveryInput);
-
-            String deliveryTypeStr;
-            switch (deliveryType) {
-                case 1: deliveryTypeStr = "Express Delivery"; break;
-                case 2: deliveryTypeStr = "Standard Delivery"; break;
-                case 3: deliveryTypeStr = "Bulk Delivery"; break;
-                default: deliveryTypeStr = "Standard Delivery"; break;
-            }
 
             // Get seller information from SellerSession
             String sellerName = SellerSession.getSellerName();
@@ -143,7 +123,7 @@ public class ProductManager {
             newProduct.setDescription(description);
             newProduct.setCategory(category);
             newProduct.setPerishable(isPerishable);
-            newProduct.setDeliveryType(deliveryTypeStr);
+
 
             addProduct(newProduct);
             stockManager.addStock(new Stock(name.substring(0, Math.min(4, name.length())).toUpperCase(),
@@ -428,7 +408,6 @@ public class ProductManager {
         System.out.println("Location: " + product.getLocation());
         System.out.println("Description: " + product.getDescription());
         System.out.println("Category: " + product.getCategory());
-        System.out.println("Delivery Type: " + product.getDeliveryType());
         System.out.println("Perishable: " + (product.isPerishable() ? "Yes" : "No"));
     }
 

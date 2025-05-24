@@ -46,16 +46,21 @@ public class ShoppingCart {
         System.out.printf("%-42s ₱%.2f\n", "Total:", total);
     }
 
-    public Order createOrder(String buyerName, String deliveryAddress, String paymentMethod) {
+    public Order createOrder(String buyerName, String deliveryAddress, String paymentMethod,
+                             List<String> deliveryTypes) {
         List<OrderItem> orderItems = new ArrayList<>();
-        for (CartItem cartItem : items) {
+        for (int i = 0; i < items.size(); i++) {
+            CartItem cartItem = items.get(i);
             orderItems.add(new OrderItem(
                     cartItem.getProduct().getName(),
                     cartItem.getQuantity(),
                     cartItem.getProduct().getPrice(),
-                    cartItem.getProduct().getSeller()
+                    cartItem.getProduct().getSeller(),
+                    deliveryTypes.get(i),
+                    cartItem.getProduct().isPerishable()
             ));
         }
+
 
         double totalAmount = 0;
         for (CartItem item : items) {

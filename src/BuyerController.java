@@ -132,7 +132,6 @@ public class BuyerController {
             System.out.println("Location: " + product.getLocation());
             System.out.println("Category: " + product.getCategory());
             System.out.println("Description: " + product.getDescription());
-            System.out.println("Delivery Type: " + product.getDeliveryType());
             System.out.println("Perishable: " + (product.isPerishable() ? "Yes" : "No"));
 
             System.out.println("\nOptions:");
@@ -301,9 +300,67 @@ public class BuyerController {
                 break;
         }
 
-        // Create order and update product quantities
-        Order order = cart.createOrder(buyerSession.getBuyerName(), buyerSession.getBuyerLocation(), paymentMethod);
-        buyerSession.addOrder(order);
+        // Create order items with delivery types
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (CartItem cartItem : cart.getItems()) {
+            System.out.println("\nSelect delivery type for " + cartItem.getProduct().getName() + ":");
+            System.out.println("1. Express Delivery (+₱100)");
+            System.out.println("2. Standard Delivery");
+            System.out.println("3. Bulk Delivery (10+ items, 10% discount)");
+            System.out.print("Enter choice (1-3): ");
+
+            int deliveryChoice = getIntInput();
+            scanner.nextLine(); // Consume newline
+
+            String deliveryType = "Standard Delivery";
+            double itemPrice = cartItem.getProduct().getPrice();
+
+            // Apply delivery type modifiers
+            switch (deliveryChoice) {
+                case 1:
+                    deliveryType = "Express Delivery";
+                    itemPrice += 100; // Express delivery fee
+                    break;
+                case 2:
+                    deliveryType = "Standard Delivery";
+                    break;
+                case 3:
+                    deliveryType = "Bulk Delivery";
+                    if (cartItem.getQuantity() >= 10) {
+                        itemPrice *= 0.9; // 10% discount for bulk
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid choice, using Standard Delivery");
+            }
+
+            orderItems.add(new OrderItem(
+                    cartItem.getProduct().getName(),
+                    cartItem.getQuantity(),
+                    itemPrice,
+                    cartItem.getProduct().getSeller(),
+                    deliveryType,
+                    cartItem.getProduct().isPerishable()
+            ));
+        }
+
+        // Calculate total amount
+        double totalAmount = 0;
+        for (OrderItem item : orderItems) {
+            totalAmount += item.getUnitPrice() * item.getQuantity();
+        }
+
+        // Create order
+        Order order = new Order(
+                "ORD" + System.currentTimeMillis(),
+                java.time.LocalDate.now().toString(),
+                "Pending",
+                buyerSession.getBuyerName(),
+                buyerSession.getBuyerLocation(),
+                paymentMethod,
+                totalAmount,
+                orderItems
+        );
 
         // Update product quantities in the database
         List<Product> allProducts = FileManager.loadProducts();
@@ -334,7 +391,15 @@ public class BuyerController {
         System.out.println("Order #" + order.getOrderId() + " has been placed successfully!");
         System.out.println("Total Amount: ₱" + order.getTotalAmount());
         System.out.println("Payment Method: " + paymentMethod);
-        System.out.println("Thank you for your purchase!");
+
+        // Display delivery information
+        System.out.println("\nDelivery Details:");
+        for (OrderItem item : order.getItems()) {
+            System.out.println("- " + item.getProductName() + ": " + item.getDeliveryType() +
+                    (item.isPerishable() ? " (Perishable)" : ""));
+        }
+
+        System.out.println("\nThank you for your purchase!");
     }
 
     private void viewProfile() {
@@ -465,4 +530,7 @@ public class BuyerController {
         }
         return text.substring(0, maxLength - 3) + "...";
     }
+
+
 }
+

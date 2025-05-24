@@ -84,13 +84,16 @@ public class PendingOrderFileManager {
                         String[] itemsArray = parts[7].split(";");
                         for (String itemStr : itemsArray) {
                             String[] itemParts = itemStr.split(",");
-                            if (itemParts.length >= 4) {
+                            if (itemParts.length >= 6) {  // Changed from 4 to 6
                                 String productName = itemParts[0];
                                 int quantity = Integer.parseInt(itemParts[1]);
                                 double unitPrice = Double.parseDouble(itemParts[2]);
                                 String seller = itemParts[3];
+                                String deliveryType = itemParts[4];
+                                boolean isPerishable = Boolean.parseBoolean(itemParts[5]);
 
-                                items.add(new OrderItem(productName, quantity, unitPrice, seller));
+                                items.add(new OrderItem(productName, quantity, unitPrice, seller,
+                                        deliveryType, isPerishable));
                             }
                         }
                     }
